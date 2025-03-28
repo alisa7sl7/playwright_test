@@ -3,9 +3,12 @@ import { test, expect } from '@playwright/test';
 const URL = 'https://playwright.dev/'
 
 test.describe('Тесты главной страницы', ()=> {
+    test.beforeEach(async ({page})=> {
+    await page.goto(URL);
+  })
+
 test('Проверка отображения элементов навигации (header)', async ({ page }) => {
-  await page.goto(URL);
-  
+
   await expect.soft(page.getByRole('link', { name: 'Docs' })).toBeVisible();
   await expect.soft(page.getByRole('link', { name: 'API' })).toBeVisible();
   await expect.soft(page.getByRole('button', { name: 'Node.js' })).toBeVisible();
@@ -17,7 +20,6 @@ test('Проверка отображения элементов навигац�
 });
 
 test('Проверка названий элементов навигации (header)', async ({ page }) => {
-  await page.goto(URL);
 
   await expect.soft(page.getByRole('link', { name: 'Playwright logo Playwright' })).toContainText('Playwright');
   await expect.soft(page.getByRole('link', { name: 'Docs' })).toContainText('Docs');
@@ -28,7 +30,6 @@ test('Проверка названий элементов навигации (h
 });
 
 test('Проверка аттрибутов href элементов навигации (header) ', async ({ page }) => {
-  await page.goto(URL);
 
   await expect.soft(page.getByRole('link', { name: 'Playwright logo Playwright' })).toHaveAttribute('href','/');
   await expect.soft(page.getByRole('link', { name: 'Docs' })).toHaveAttribute('href','/docs/intro');
@@ -41,14 +42,12 @@ test('Проверка аттрибутов href элементов навига
 });
 
 test('Проверка переключения лайт мода', async ({ page }) => {
-  await page.goto(URL);
 
   await page.getByRole('button', { name: 'Switch between dark and light' }).click()
   await expect.soft(page.locator('html')).toHaveAttribute('data-theme', 'dark')
 });
 
 test('Проверка заголовка страницы', async ({ page }) => {
-  await page.goto(URL);
 
   await expect.soft(page.getByRole('heading', { name: 'Playwright enables reliable' })).toBeVisible();
   await expect.soft(page.getByRole('heading', { name: 'Playwright enables reliable' })).toContainText
@@ -56,8 +55,6 @@ test('Проверка заголовка страницы', async ({ page }) =>
 });
 
 test('Проверка кнопки "Get Started', async ({ page }) => {
-  await page.goto(URL);
-
 
   await expect.soft(page.getByRole('link', { name: 'Get started' })).toBeVisible();
   await expect.soft(page.getByRole('link', { name: 'Get started' })).toContainText('Get started');

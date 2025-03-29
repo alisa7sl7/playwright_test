@@ -10,6 +10,8 @@ interface Elements {
   }
 }
 
+const lightMode = ['light', 'dark']
+
 const elements: Elements[] = [
   {
     locator: (page: Page): Locator => page.getByRole('link', { name: 'Playwright logo Playwright' }),
@@ -135,6 +137,16 @@ test('Проверка переключения лайт мода', async ({ pag
   await page.getByRole('button', { name: 'Switch between dark and light' }).click()
   await expect.soft(page.locator('html')).toHaveAttribute('data-theme', 'dark')
 });
+
+lightMode.forEach((value)=> {
+  test(`Проверка стилей активного ${value} мода `, async ({page})=> {
+    await page.evaluate((value)=> {
+      document.querySelector('html')?.setAttribute('data-theme',value)
+    }, value)
+    await expect(page).toHaveScreenshot(`pageWith${value}Mode.png`);
+})
+})
+
 })
 
 

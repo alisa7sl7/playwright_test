@@ -31,6 +31,9 @@ const config: devices = {
 //    ['html', { outputFolder: `reports/${htmlReportName}`, open: 'never' }],
     ['allure-playwright', {detail: true, outputFolder: `reports/allure_report`, open: 'never' }],
   ],
+  toMatchAriaSnapshot: {
+      pathTemplate: '{testDir}/snapshots/{testFilePath}/{arg}{ext}',
+    }
 };
 
 export default config;
